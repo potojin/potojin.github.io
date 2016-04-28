@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Welcome to Jekyll!</title>
-  <meta name="description" content="You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different wa...">
+  <title>FreeBSD 환경설정</title>
+  <meta name="description" content="FreeBSD 10.x 설치 후 기본적인 환경설정 가이드">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://potojin.github.io/jekyll/update/2016/04/25/welcome-to-jekyll.html">
+  <link rel="canonical" href="http://potojin.github.io/freebsd/2016/04/25/FreeBSD-initial-setting.html">
   <link rel="alternate" type="application/rss+xml" title="블로그 테스트" href="http://potojin.github.io/feed.xml">
 </head>
 
@@ -57,24 +57,73 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Welcome to Jekyll!</h1>
+    <h1 class="post-title" itemprop="name headline">FreeBSD 환경설정</h1>
     <p class="post-meta"><time datetime="2016-04-25T11:08:19+09:00" itemprop="datePublished">Apr 25, 2016</time></p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+    <p>FreeBSD 10.x 설치 후 기본적인 환경설정 가이드</p>
 
-<p>To add new posts, simply add a file in the <code class="highlighter-rouge">_posts</code> directory that follows the convention <code class="highlighter-rouge">YYYY-MM-DD-name-of-post.ext</code> and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<h3 id="sshd-enable">sshd enable</h3>
+<p><code class="highlighter-rouge">/etc/rc.conf</code>에 다음 내용이  없으면 추가 한다.</p>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nv">sshd_enable</span><span class="o">=</span><span class="s2">"YES"</span>
+</code></pre>
+</div>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
-<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+<h3 id="ssh-root-login">ssh로 root login활성화</h3>
+<p><code class="highlighter-rouge">/etc/ssh/sshd_config</code>의 아래 라인의 comment를 제거하고 yes로 바꿔줌</p>
 
-<p>Check out the <a href="http://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>PermitRootLogin yes
+</code></pre>
+</div>
+
+<h3 id="root-----">root권한을 얻을 수 있는 계정 추가</h3>
+<p><code class="highlighter-rouge">/etc/group</code>의 아래 라인에 계정을 추가</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>wheel::0:root,[user_id]
+</code></pre>
+</div>
+
+<h3 id="system-update">system update</h3>
+
+<pre><code class="language-d"># freebsd-update fetch
+# freebsd-update install
+# reboot
+</code></pre>
+
+<h3 id="package-installupdate">package install/update</h3>
+
+<pre><code class="language-d"># pkg
+# pkg update
+</code></pre>
+
+<h3 id="port-update">port update</h3>
+
+<pre><code class="language-d"># portsnap fetch extract --&gt; 처음 실행 할 경우
+# portsnap fetch update
+</code></pre>
+
+<h3 id="package-">기본 package 설치</h3>
+
+<pre><code class="language-d"># pkg install sudo
+# pkg install gnuls
+# pkg install vim-lite
+# pkg install portmaster
+</code></pre>
+
+<h3 id="cshrc">cshrc설정</h3>
+
+<p><code class="highlighter-rouge"># vi ~/.cshrc</code>파일에 아래 내용 작성한다. 모든 계정에 공통으로 적용하려면 <code class="highlighter-rouge">/etc/csh.cshrc</code> 파일 수정함</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>setenv LANG ko_KR.UTF-8
+setenv LC_ALL ko_KR.UTF-8
+<span class="nb">alias </span>cp cp -i
+<span class="nb">alias </span>mv mv -i
+<span class="nb">alias </span>vi vim
+<span class="nb">alias </span>ls gnuls --color<span class="o">=</span>always
+</code></pre>
+</div>
 
 
   </div>

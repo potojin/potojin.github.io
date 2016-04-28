@@ -1,14 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Your awesome title</title>
+    <title>블로그 테스트</title>
     <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
 </description>
-    <link>http://yourdomain.com/</link>
-    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 25 Apr 2016 12:39:58 +0900</pubDate>
-    <lastBuildDate>Mon, 25 Apr 2016 12:39:58 +0900</lastBuildDate>
+    <link>http://potojin.github.io/</link>
+    <atom:link href="http://potojin.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 28 Apr 2016 15:02:25 +0900</pubDate>
+    <lastBuildDate>Thu, 28 Apr 2016 15:02:25 +0900</lastBuildDate>
     <generator>Jekyll v3.1.2</generator>
+    
+      <item>
+        <title>FreeBSD 환경설정</title>
+        <description>&lt;p&gt;FreeBSD 10.x 설치 후 기본적인 환경설정 가이드&lt;/p&gt;
+
+&lt;h3 id=&quot;sshd-enable&quot;&gt;sshd enable&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/rc.conf&lt;/code&gt;에 다음 내용이  없으면 추가 한다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;sshd_enable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;YES&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;ssh-root-login&quot;&gt;ssh로 root login활성화&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/ssh/sshd_config&lt;/code&gt;의 아래 라인의 comment를 제거하고 yes로 바꿔줌&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;PermitRootLogin yes
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;root-----&quot;&gt;root권한을 얻을 수 있는 계정 추가&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/group&lt;/code&gt;의 아래 라인에 계정을 추가&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wheel::0:root,[user_id]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;system-update&quot;&gt;system update&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-d&quot;&gt;# freebsd-update fetch
+# freebsd-update install
+# reboot
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;package-installupdate&quot;&gt;package install/update&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-d&quot;&gt;# pkg
+# pkg update
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;port-update&quot;&gt;port update&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-d&quot;&gt;# portsnap fetch extract --&amp;gt; 처음 실행 할 경우
+# portsnap fetch update
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;package-&quot;&gt;기본 package 설치&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-d&quot;&gt;# pkg install sudo
+# pkg install gnuls
+# pkg install vim-lite
+# pkg install portmaster
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;cshrc&quot;&gt;cshrc설정&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;# vi ~/.cshrc&lt;/code&gt;파일에 아래 내용 작성한다. 모든 계정에 공통으로 적용하려면 &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/csh.cshrc&lt;/code&gt; 파일 수정함&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;setenv LANG ko_KR.UTF-8
+setenv LC_ALL ko_KR.UTF-8
+&lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;cp cp -i
+&lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;mv mv -i
+&lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;vi vim
+&lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;ls gnuls --color&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;always
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Mon, 25 Apr 2016 11:08:19 +0900</pubDate>
+        <link>http://potojin.github.io/freebsd/2016/04/25/FreeBSD-initial-setting.html</link>
+        <guid isPermaLink="true">http://potojin.github.io/freebsd/2016/04/25/FreeBSD-initial-setting.html</guid>
+        
+        
+        <category>FreeBSD</category>
+        
+      </item>
     
       <item>
         <title>Welcome to Jekyll!</title>
@@ -28,8 +103,8 @@
 
 </description>
         <pubDate>Mon, 25 Apr 2016 11:08:19 +0900</pubDate>
-        <link>http://yourdomain.com/jekyll/update/2016/04/25/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/jekyll/update/2016/04/25/welcome-to-jekyll.html</guid>
+        <link>http://potojin.github.io/jekyll/update/2016/04/25/welcome-to-jekyll.html</link>
+        <guid isPermaLink="true">http://potojin.github.io/jekyll/update/2016/04/25/welcome-to-jekyll.html</guid>
         
         
         <category>jekyll</category>
